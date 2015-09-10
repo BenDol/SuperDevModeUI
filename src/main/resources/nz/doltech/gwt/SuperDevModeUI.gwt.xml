@@ -1,0 +1,7 @@
+<module>
+  <!-- Google Inherits -->
+  <inherits name="com.google.gwt.user.User" />
+  <inherits name="com.google.gwt.uibinder.UiBinder" />
+
+  <source path="compiler" />
+</module>
