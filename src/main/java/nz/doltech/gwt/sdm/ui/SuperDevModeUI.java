@@ -1,4 +1,4 @@
-package nz.doltech.gwt.compiler.ui;
+package nz.doltech.gwt.sdm.ui;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
@@ -13,12 +13,12 @@ import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.*;
-import nz.doltech.gwt.compiler.SuperDevCompiler.CompletedCallback;
-import nz.doltech.gwt.compiler.SuperDevCompiler.FailedCallback;
-import nz.doltech.gwt.compiler.SuperDevCompiler.PollCallback;
-import nz.doltech.gwt.compiler.SuperDevCompiler.StartedCallback;
-import nz.doltech.gwt.compiler.util.StyleUtil;
-import nz.doltech.gwt.compiler.SuperDevCompiler;
+import nz.doltech.gwt.sdm.SuperDevCompiler.CompletedCallback;
+import nz.doltech.gwt.sdm.SuperDevCompiler.FailedCallback;
+import nz.doltech.gwt.sdm.SuperDevCompiler.PollCallback;
+import nz.doltech.gwt.sdm.SuperDevCompiler.StartedCallback;
+import nz.doltech.gwt.sdm.util.StyleUtil;
+import nz.doltech.gwt.sdm.SuperDevCompiler;
 
 public class SuperDevModeUI extends Composite {
 

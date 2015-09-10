@@ -1,4 +1,4 @@
-package nz.doltech.gwt.compiler;
+package nz.doltech.gwt.sdm;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
@@ -113,13 +113,13 @@ public class SuperDevCompiler {
             return;
         }
 
-        var moduleName = this.@nz.doltech.gwt.compiler.SuperDevCompiler::moduleName;
-        var serverUrl = this.@nz.doltech.gwt.compiler.SuperDevCompiler::serverUrl;
+        var moduleName = this.@nz.doltech.gwt.sdm.SuperDevCompiler::moduleName;
+        var serverUrl = this.@nz.doltech.gwt.sdm.SuperDevCompiler::serverUrl;
 
         // Compile erorr checking
         var error = null;
         if(moduleName) {
-            error = this.@nz.doltech.gwt.compiler.SuperDevCompiler::getCannotCompileError()();
+            error = this.@nz.doltech.gwt.sdm.SuperDevCompiler::getCannotCompileError()();
         }
         var logUrl = serverUrl + '/log/' + moduleName;
 
@@ -128,7 +128,7 @@ public class SuperDevCompiler {
             var active_modules = $wnd.__gwt_activeModules;
             getPropMap = active_modules[moduleName].bindings;
 
-            var params = this.@nz.doltech.gwt.compiler.SuperDevCompiler::getBindingParameters(Lcom/google/gwt/core/client/JavaScriptObject;)(getPropMap);
+            var params = this.@nz.doltech.gwt.sdm.SuperDevCompiler::getBindingParameters(Lcom/google/gwt/core/client/JavaScriptObject;)(getPropMap);
             var urlPrefix = serverUrl + "/recompile/" + moduleName + "?" + params;
 
             var _this = this;
@@ -152,30 +152,30 @@ public class SuperDevCompiler {
                 if ($wnd.__gwt_bookmarklet_globals.compiling) {
                     // Date.now() fails in IE8
                     lastPollStart = new Date().getTime();
-                    _this.@nz.doltech.gwt.compiler.SuperDevCompiler::onPoll(F)(lastPollStart);
-                    _this.@nz.doltech.gwt.compiler.SuperDevCompiler::callJsonp(Ljava/lang/String;Lcom/google/gwt/core/client/JavaScriptObject;)(serverUrl + '/progress?', onPollFinished);
+                    _this.@nz.doltech.gwt.sdm.SuperDevCompiler::onPoll(F)(lastPollStart);
+                    _this.@nz.doltech.gwt.sdm.SuperDevCompiler::callJsonp(Ljava/lang/String;Lcom/google/gwt/core/client/JavaScriptObject;)(serverUrl + '/progress?', onPollFinished);
                 }
             }
 
             function onCompileCompleted(json) {
                 $wnd.__gwt_bookmarklet_globals.compiling = false;
                 if (json.status != 'ok') {
-                    _this.@nz.doltech.gwt.compiler.SuperDevCompiler::onCompileFailed(Ljava/lang/String;)(logUrl);
+                    _this.@nz.doltech.gwt.sdm.SuperDevCompiler::onCompileFailed(Ljava/lang/String;)(logUrl);
                     return;
                 }
-                if(!_this.@nz.doltech.gwt.compiler.SuperDevCompiler::onCompileCompleted(Lcom/google/gwt/core/client/JavaScriptObject;)(json)) {
-                    _this.@nz.doltech.gwt.compiler.SuperDevCompiler::reloadInDevMode()();
+                if(!_this.@nz.doltech.gwt.sdm.SuperDevCompiler::onCompileCompleted(Lcom/google/gwt/core/client/JavaScriptObject;)(json)) {
+                    _this.@nz.doltech.gwt.sdm.SuperDevCompiler::reloadInDevMode()();
                 }
             }
 
             $wnd.__gwt_bookmarklet_globals.compiling = true;
 
             setTimeout(poll, 1000);
-            this.@nz.doltech.gwt.compiler.SuperDevCompiler::onCompileStarted(Ljava/lang/String;Ljava/lang/String;)(moduleName, urlPrefix);
-            this.@nz.doltech.gwt.compiler.SuperDevCompiler::callJsonp(Ljava/lang/String;Lcom/google/gwt/core/client/JavaScriptObject;)(urlPrefix, onCompileCompleted);
+            this.@nz.doltech.gwt.sdm.SuperDevCompiler::onCompileStarted(Ljava/lang/String;Ljava/lang/String;)(moduleName, urlPrefix);
+            this.@nz.doltech.gwt.sdm.SuperDevCompiler::callJsonp(Ljava/lang/String;Lcom/google/gwt/core/client/JavaScriptObject;)(urlPrefix, onCompileCompleted);
         }
         else {
-            this.@nz.doltech.gwt.compiler.SuperDevCompiler::onCompileFailed(Ljava/lang/String;Ljava/lang/String;)(error, logUrl)
+            this.@nz.doltech.gwt.sdm.SuperDevCompiler::onCompileFailed(Ljava/lang/String;Ljava/lang/String;)(error, logUrl)
         }
     }-*/;
 
@@ -206,7 +206,7 @@ public class SuperDevCompiler {
     }
 
     private native String getBindingParameters(JavaScriptObject getPropMap) /*-{
-        var session_key = '__gwtDevModeSession:' + this.@nz.doltech.gwt.compiler.SuperDevCompiler::moduleName;
+        var session_key = '__gwtDevModeSession:' + this.@nz.doltech.gwt.sdm.SuperDevCompiler::moduleName;
 
         var prop_map = getPropMap();
         var props = [];
@@ -252,7 +252,7 @@ public class SuperDevCompiler {
             var modules_on_codeserver = $wnd.__gwt_codeserver_config.moduleNames;
             // Support browsers without indexOf() (e.g. IE8).
             for (var i = 0; i < modules_on_codeserver.length; i++) {
-                if (modules_on_codeserver[i] == this.@nz.doltech.gwt.compiler.SuperDevCompiler::moduleName) {
+                if (modules_on_codeserver[i] == this.@nz.doltech.gwt.sdm.SuperDevCompiler::moduleName) {
                     return true;
                 }
             }
@@ -268,10 +268,10 @@ public class SuperDevCompiler {
      *     a recompile will succeed.
      */
     private native String getCannotCompileError() /*-{
-        if (!this.@nz.doltech.gwt.compiler.SuperDevCompiler::isModuleOnCodeServer()()) {
+        if (!this.@nz.doltech.gwt.sdm.SuperDevCompiler::isModuleOnCodeServer()()) {
             return 'The code server isn\'t configured to compile this module.';
         }
-        var moduleName = this.@nz.doltech.gwt.compiler.SuperDevCompiler::moduleName;
+        var moduleName = this.@nz.doltech.gwt.sdm.SuperDevCompiler::moduleName;
 
         var modules_on_page = $wnd.__gwt_activeModules;
         if (!modules_on_page || !(moduleName in modules_on_page)) {
@@ -299,8 +299,8 @@ public class SuperDevCompiler {
      * the GWT linker.)
      */
     public native void reloadInDevMode() /*-{
-        var moduleName = this.@nz.doltech.gwt.compiler.SuperDevCompiler::moduleName;
-        var serverUrl = this.@nz.doltech.gwt.compiler.SuperDevCompiler::serverUrl;
+        var moduleName = this.@nz.doltech.gwt.sdm.SuperDevCompiler::moduleName;
+        var serverUrl = this.@nz.doltech.gwt.sdm.SuperDevCompiler::serverUrl;
 
         var key = '__gwtDevModeHook:' + moduleName;
         window.sessionStorage[key] = serverUrl + '/' + moduleName + '/' +
@@ -313,7 +313,7 @@ public class SuperDevCompiler {
      * @param moduleName The modules name
      */
     private native void  reloadWithoutDevMode(String moduleName) /*-{
-        var key = '__gwtDevModeHook:' + this.@nz.doltech.gwt.compiler.SuperDevCompiler::moduleName;
+        var key = '__gwtDevModeHook:' + this.@nz.doltech.gwt.sdm.SuperDevCompiler::moduleName;
         window.sessionStorage.removeItem(key);
         $wnd.location.reload();
     }-*/;
@@ -348,14 +348,14 @@ public class SuperDevCompiler {
     private native void injectDevModeOn() /*-{
         $wnd.__gwt_bookmarklet_globals.compiling = true;
 
-        var serverUrl = this.@nz.doltech.gwt.compiler.SuperDevCompiler::serverUrl;
-        var moduleName = this.@nz.doltech.gwt.compiler.SuperDevCompiler::moduleName;
+        var serverUrl = this.@nz.doltech.gwt.sdm.SuperDevCompiler::serverUrl;
+        var moduleName = this.@nz.doltech.gwt.sdm.SuperDevCompiler::moduleName;
         $wnd.__gwt_bookmarklet_params = {'server_url': serverUrl + '/', 'module_name':moduleName};
         var s = $wnd.document.createElement('script');
         s.src = serverUrl + '/dev_mode_on.js';
         void($wnd.document.getElementsByTagName('head')[0].appendChild(s));
 
-        this.@nz.doltech.gwt.compiler.SuperDevCompiler::onInjected()();
+        this.@nz.doltech.gwt.sdm.SuperDevCompiler::onInjected()();
     }-*/;
 
     private void onInjected() {

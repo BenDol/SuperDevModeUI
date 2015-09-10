@@ -1,4 +1,4 @@
-package nz.doltech.gwt.compiler.ui;
+package nz.doltech.gwt.sdm.ui;
 
 import com.google.gwt.dom.client.ParagraphElement;
 import com.google.gwt.user.client.ui.HTMLPanel;

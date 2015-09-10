@@ -1,4 +1,4 @@
-package nz.doltech.gwt.compiler.util;
+package nz.doltech.gwt.sdm.util;
 
 import com.google.gwt.dom.client.Style.Unit;
 
@@ -8,7 +8,6 @@ public class StyleUtil {
         if(value == null) {
             return null;
         }
-
         return Double.parseDouble(value
             .replaceAll(Unit.CM.getType(), "")
             .replaceAll(Unit.EM.getType(), "")
@@ -18,8 +17,7 @@ public class StyleUtil {
             .replaceAll(Unit.PC.getType(), "")
             .replaceAll(Unit.PCT.getType(), "")
             .replaceAll(Unit.PT.getType(), "")
-            .replaceAll(Unit.PX.getType(), "")
-        );
+            .replaceAll(Unit.PX.getType(), ""));
     }
 
     public static Unit getMeasurementUnit(String value) {
