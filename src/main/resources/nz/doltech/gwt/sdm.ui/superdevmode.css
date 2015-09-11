@@ -1,0 +1,31 @@
+.sdm {
+    left: 0;
+    top: 0;
+    position: absolute;
+    z-index: 9998;
+}
+
+.sdm .compile-btn {
+    opacity: 0.4;
+    transition: all 0.3s ease 0s;
+}
+
+.sdm .compile-btn:hover {
+    opacity: 1;
+    position: fixed;
+}
+
+.error-panel {
+    background-color: white;
+    border: black 1px solid;
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-top: 16px;
+    padding-bottom: 7px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    z-index: 9999;
+    /*bottom: 0;
+    top : auto !important;*/
+}

@@ -9,6 +9,6 @@
     <ui:with field="res" type="nz.co.doltech.gwt.sdm.ui.SuperDevModeUI.Resources"/>
 
     <g:HTMLPanel ui:field="sdmPanel" addStyleNames="{res.style.sdm}">
-        <g:Button ui:field="btnCompile" text="Compile" icon="COG" addStyleNames="{res.style.compileBtn}"/>
+        <g:Button ui:field="btnCompile" text="Compile" addStyleNames="{res.style.compileBtn}"/>
     </g:HTMLPanel>
 </ui:UiBinder>
