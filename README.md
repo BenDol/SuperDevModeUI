@@ -5,12 +5,12 @@ compile when pressing F5. I also added a ghost button that will sit in the top l
 a recompile.
 
 ## How to use
-Add the `nz.doltech:sdm-compiler` dependency to your project.
+Add the `nz.co.doltech.gwt:sdm-compiler` dependency to your project.
 
 With maven:
 ```xml
 <dependency>
-    <groupId>nz.doltech</groupId>
+    <groupId>nz.co.doltech.gwt</groupId>
     <artifactId>sdm-compiler</artifactId>
     <version>1.0</version>
 </dependency>
@@ -18,7 +18,7 @@ With maven:
 
 Next you need to add the GWT module like so:
 ```xml
-<inherits name="nz.doltech.gwt.SuperDevMode"/>
+<inherits name="nz.co.doltech.gwt.SuperDevMode"/>
 ```
 
 Now you can implement the `SuperDevModeUI` or simply manipulate the `SuperDevCompiler`.

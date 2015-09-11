@@ -1,4 +1,4 @@
-package nz.doltech.gwt.sdm.util;
+package nz.co.doltech.gwt.sdm.util;
 
 import com.google.gwt.dom.client.Style.Unit;
 

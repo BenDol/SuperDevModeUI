@@ -6,7 +6,7 @@
              ui:generateKeys='com.google.gwt.i18n.server.keygen.MD5KeyGenerator'
              ui:generateLocales='default'>
 
-    <ui:with field="res" type="nz.doltech.gwt.sdm.ui.SuperDevModeUI.Resources"/>
+    <ui:with field="res" type="nz.co.doltech.gwt.sdm.ui.SuperDevModeUI.Resources"/>
 
     <g:HTMLPanel ui:field="sdmPanel" addStyleNames="{res.style.sdm}">
         <g:Button ui:field="btnCompile" text="Compile" icon="COG" addStyleNames="{res.style.compileBtn}"/>
