@@ -4,7 +4,7 @@
 
     <groupId>nz.co.doltech</groupId>
     <artifactId>sdm-compiler</artifactId>
-    <version>1.0</version>
+    <version>1.0.1-SNAPSHOT</version>
 
     <name>SuperDevMode Compiler</name>
     <description>SuperDevMode compilation invoker 'wrapper' with a pinch of UI!</description>
@@ -20,8 +20,8 @@
         <connection>scm:git:git@github.com:BenDol/SuperDevModeUI.git</connection>
         <developerConnection>scm:git:git@github.com:BenDol/SuperDevModeUI.git</developerConnection>
         <url>https://github.com/BenDol/SuperDevModeUI</url>
-      <tag>sdm-compiler-1.0</tag>
-  </scm>
+        <tag>sdm-compiler-1.0</tag>
+    </scm>
 
     <issueManagement>
         <url>https://github.com/BenDol/SuperDevModeUI/issues</url>
