@@ -12,7 +12,7 @@ With maven:
 <dependency>
     <groupId>nz.co.doltech.gwt</groupId>
     <artifactId>sdm-compiler</artifactId>
-    <version>1.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
