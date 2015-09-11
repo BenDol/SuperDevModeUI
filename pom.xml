@@ -4,7 +4,7 @@
 
     <groupId>nz.co.doltech</groupId>
     <artifactId>sdm-compiler</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
 
     <name>SuperDevMode Compiler</name>
     <description>SuperDevMode compilation invoker 'wrapper' with a pinch of UI!</description>

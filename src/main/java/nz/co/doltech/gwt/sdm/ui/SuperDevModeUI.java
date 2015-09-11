@@ -52,7 +52,7 @@ public class SuperDevModeUI extends Composite {
     public SuperDevModeUI() {
         resources.style().ensureInjected();
 
-        superDevCompiler.setPollCallback(new PollCallback() {
+        superDevCompiler.addPollCallback(new PollCallback() {
             @Override
             public void onPoll(float startTime) {
                 if (progressPanel != null && progressPanel.getWidgetCount() > 0) {
@@ -62,7 +62,7 @@ public class SuperDevModeUI extends Composite {
             }
         });
 
-        superDevCompiler.setCompileStartCallback(new StartedCallback() {
+        superDevCompiler.addCompileStartCallback(new StartedCallback() {
             @Override
             public void onStarted(String moduleName, String requestUrl) {
                 progressPanel = new AbsolutePanel();
@@ -71,7 +71,7 @@ public class SuperDevModeUI extends Composite {
             }
         });
 
-        superDevCompiler.setCompileCompleteCallback(new CompletedCallback() {
+        superDevCompiler.addCompileCompleteCallback(new CompletedCallback() {
             @Override
             public boolean onCompleted(JavaScriptObject json) {
                 compilationStopped();
@@ -79,7 +79,7 @@ public class SuperDevModeUI extends Composite {
             }
         });
 
-        superDevCompiler.setCompileFailedCallback(new FailedCallback() {
+        superDevCompiler.addCompileFailedCallback(new FailedCallback() {
             @Override
             public void onFailed(String reason, String logUrl) {
                 btnCompile.setText("Try Again");
@@ -88,9 +88,9 @@ public class SuperDevModeUI extends Composite {
                 content.getElement().getStyle().setColor("red");
                 content.add(new Paragraph(reason));
                 Widget error;
-                if(!showErrorLog) {
+                if (!showErrorLog) {
                     error = new Anchor("View Error Log", logUrl);
-                    ((Anchor)error).setTarget("_blank");
+                    ((Anchor) error).setTarget("_blank");
                 } else {
                     error = new Frame(logUrl);
                     error.setWidth("730px");
@@ -103,6 +103,7 @@ public class SuperDevModeUI extends Composite {
             }
         });
 
+        RootPanel.getBodyElement().focus();
         RootPanel.get().addDomHandler(new KeyDownHandler() {
             @Override
             public void onKeyDown(KeyDownEvent event) {
@@ -121,6 +122,10 @@ public class SuperDevModeUI extends Composite {
         startCompile();
     }
 
+    /**
+     * Show the SuperDevModeUI message panel.
+     * @param content the content to display.
+     */
     public void showMessagePanel(AbsolutePanel content) {
         PopupPanel popupPanel = new PopupPanel(true);
         popupPanel.addStyleName(resources.style().errorPanel());
@@ -145,10 +150,16 @@ public class SuperDevModeUI extends Composite {
         progressPanel = null;
     }
 
+    /**
+     * Get the SuperDevModeUI panel.
+     */
     public HTMLPanel getPanel() {
         return sdmPanel;
     }
 
+    /**
+     * Disable the visual UI components (i.e. Button).
+     */
     public void disableUI() {
         sdmPanel.clear();
     }
@@ -157,10 +168,16 @@ public class SuperDevModeUI extends Composite {
         return showErrorLog;
     }
 
+    /**
+     * Show the error log message in an iframe when a compile error occurs.
+     */
     public void setShowErrorLog(boolean showErrorLog) {
         this.showErrorLog = showErrorLog;
     }
 
+    /**
+     * Invoke compilation.
+     */
     public void startCompile() {
         btnCompile.setText("Compiling...");
         superDevCompiler.compile();

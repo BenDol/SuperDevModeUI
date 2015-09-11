@@ -39,4 +39,8 @@ SuperDevModeUI superDevModeUI = GWT.create(SuperDevModeUI.class);
 superDevModeUI.disableUI();
 ```
 
+![Example One](https://dl.dropboxusercontent.com/u/49948294/wiki/sdm_compiler/sdm-ui-1.png)
+
+![Example Two](https://dl.dropboxusercontent.com/u/49948294/wiki/sdm_compiler/sdm-ui-2.png)
+
 Report any issues and happy hacking!

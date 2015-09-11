@@ -11,6 +11,8 @@ import com.google.gwt.dom.client.Node;
 import com.google.gwt.dom.client.NodeList;
 import com.google.gwt.dom.client.ScriptElement;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Logger;
 
 public class SuperDevCompiler {
@@ -59,11 +61,11 @@ public class SuperDevCompiler {
     private String serverUrl;
     private boolean injected = false;
 
-    private InjectedCallback injectedCallback;
-    private StartedCallback startCallback;
-    private PollCallback pollCallback;
-    private CompletedCallback completeCallback;
-    private FailedCallback failedCallback;
+    private Set<InjectedCallback> injectedCallbacks = new HashSet<>();
+    private Set<StartedCallback> startCallbacks = new HashSet<>();
+    private Set<PollCallback> pollCallbacks = new HashSet<>();
+    private Set<CompletedCallback> completeCallbacks = new HashSet<>();
+    private Set<FailedCallback> failedCallbacks = new HashSet<>();
 
     private SuperDevCompiler(String moduleName, String serverUrl) {
         this.moduleName = moduleName;
@@ -180,19 +182,29 @@ public class SuperDevCompiler {
     }-*/;
 
     private void onCompileStarted(String moduleName, String requestUrl) {
-        if(startCallback != null) {
-            startCallback.onStarted(moduleName, requestUrl);
+        for(StartedCallback callback : startCallbacks) {
+            if(callback != null) {
+                callback.onStarted(moduleName, requestUrl);
+            }
         }
     }
 
     private void onPoll(float startTime) {
-        if(pollCallback != null) {
-            pollCallback.onPoll(startTime);
+        for(PollCallback callback : pollCallbacks) {
+            if(callback != null) {
+                callback.onPoll(startTime);
+            }
         }
     }
 
     private boolean onCompileCompleted(JavaScriptObject json) {
-        return completeCallback != null && completeCallback.onCompleted(json);
+        boolean stopRefresh = false;
+        for(CompletedCallback callback : completeCallbacks) {
+            if(callback != null) {
+                stopRefresh = stopRefresh || callback.onCompleted(json);
+            }
+        }
+        return stopRefresh;
     }
 
     private void onCompileFailed(String logUrl) {
@@ -200,8 +212,10 @@ public class SuperDevCompiler {
     }
 
     private void onCompileFailed(String reason, String log) {
-        if(failedCallback != null) {
-            failedCallback.onFailed(reason, log);
+        for(FailedCallback callback : failedCallbacks) {
+            if(callback != null) {
+                callback.onFailed(reason, log);
+            }
         }
     }
 
@@ -312,7 +326,7 @@ public class SuperDevCompiler {
      * Turns dev mode off for the given module, then reloads the page.
      * @param moduleName The modules name
      */
-    private native void  reloadWithoutDevMode(String moduleName) /*-{
+    private native void reloadWithoutDevMode(String moduleName) /*-{
         var key = '__gwtDevModeHook:' + this.@nz.co.doltech.gwt.sdm.SuperDevCompiler::moduleName;
         window.sessionStorage.removeItem(key);
         $wnd.location.reload();
@@ -369,9 +383,7 @@ public class SuperDevCompiler {
                     devModeOn.removeFromParent();
 
                     injected = true;
-                    if (injectedCallback != null) {
-                        injectedCallback.onInjected();
-                    }
+                    executeInjectedCallbacks();
 
                     setCompiling(false);
                     return false;
@@ -385,26 +397,101 @@ public class SuperDevCompiler {
         }, 200);
     }
 
-    public void setInjectedCallback(InjectedCallback injectedCallback) {
-        this.injectedCallback = injectedCallback;
-        if(isDevModeInjected()) {
-            injectedCallback.onInjected();
+    private void executeInjectedCallbacks() {
+        for(InjectedCallback callback : injectedCallbacks) {
+            if(callback != null) {
+                callback.onInjected();
+            }
         }
     }
 
-    public void setCompileStartCallback(StartedCallback startCallback) {
-        this.startCallback = startCallback;
+    /**
+     * Add an injection callback to execute when super dev mode is injected.
+     */
+    public InjectedCallback addInjectedCallback(InjectedCallback injectedCallback) {
+        if(!injectedCallbacks.contains(injectedCallback)) {
+            injectedCallbacks.add(injectedCallback);
+
+            // Check if dev mode already injected
+            if (isDevModeInjected()) {
+                executeInjectedCallbacks();
+            }
+        }
+        return injectedCallback;
     }
 
-    public void setPollCallback(PollCallback pollCallback) {
-        this.pollCallback = pollCallback;
+    /**
+     * Remove an existing injected callback.
+     */
+    public boolean removeInjectedCallback(InjectedCallback injectedCallback) {
+        return injectedCallback != null && injectedCallbacks.remove(injectedCallback);
     }
 
-    public void setCompileCompleteCallback(CompletedCallback completeCallback) {
-        this.completeCallback = completeCallback;
+    /**
+     * Add a compile start callback to execute when the compilation starts.
+     */
+    public StartedCallback addCompileStartCallback(StartedCallback startCallback) {
+        if(!startCallbacks.contains(startCallback)) {
+            startCallbacks.add(startCallback);
+        }
+        return startCallback;
     }
 
-    public void setCompileFailedCallback(FailedCallback failedCallback) {
-        this.failedCallback = failedCallback;
+    /**
+     * Remove an existing started callback.
+     */
+    public boolean removeCompileStartCallback(StartedCallback startCallback) {
+        return startCallback != null && startCallbacks.remove(startCallback);
+    }
+
+    /**
+     * Add a poll callback each time a poll is sent to the CodeServer.
+     */
+    public PollCallback addPollCallback(PollCallback pollCallback) {
+        if(!pollCallbacks.contains(pollCallback)) {
+            pollCallbacks.add(pollCallback);
+        }
+        return pollCallback;
+    }
+
+    /**
+     * Remove an existing poll callback.
+     */
+    public boolean removePollCallback(PollCallback pollCallback) {
+        return pollCallback != null && pollCallbacks.remove(pollCallback);
+    }
+
+    /**
+     * Add a compile complete callback that is called when the compile is completed.
+     */
+    public CompletedCallback addCompileCompleteCallback(CompletedCallback completeCallback) {
+        if(!completeCallbacks.contains(completeCallback)) {
+            completeCallbacks.add(completeCallback);
+        }
+        return completeCallback;
+    }
+
+    /**
+     * Remove an existing complete callback.
+     */
+    public boolean removeCompileCompleteCallback(CompletedCallback completeCallback) {
+        return completeCallback != null && completeCallbacks.remove(completeCallback);
+    }
+
+    /**
+     * Add a compile failed callback that is called when a compile fails.
+     */
+    public FailedCallback addCompileFailedCallback(FailedCallback failedCallback) {
+        if(!failedCallbacks.contains(failedCallback)) {
+            failedCallbacks.add(failedCallback);
+        }
+        return failedCallback;
+    }
+
+    /**
+     * Remove an existing failed callback.
+     */
+    public boolean removeCompileFailedCallback(FailedCallback failedCallback) {
+        return failedCallback != null && failedCallbacks.remove(failedCallback);
     }
 }
