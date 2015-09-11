@@ -43,6 +43,8 @@ public class SuperDevModeUI extends Composite {
     @UiField HTMLPanel sdmPanel;
     @UiField Button btnCompile;
 
+    private boolean showErrorLog = true;
+
     private SuperDevCompiler superDevCompiler = SuperDevCompiler.get();
 
     private AbsolutePanel progressPanel;
@@ -85,8 +87,15 @@ public class SuperDevModeUI extends Composite {
                 AbsolutePanel content = new AbsolutePanel();
                 content.getElement().getStyle().setColor("red");
                 content.add(new Paragraph(reason));
-                Anchor error = new Anchor("View Error Log", logUrl);
-                error.setTarget("_blank");
+                Widget error;
+                if(!showErrorLog) {
+                    error = new Anchor("View Error Log", logUrl);
+                    ((Anchor)error).setTarget("_blank");
+                } else {
+                    error = new Frame(logUrl);
+                    error.setWidth("730px");
+                    error.setHeight("300px");
+                }
                 content.add(error);
                 showMessagePanel(content);
 
@@ -142,6 +151,14 @@ public class SuperDevModeUI extends Composite {
 
     public void disableUI() {
         sdmPanel.clear();
+    }
+
+    public boolean isShowErrorLog() {
+        return showErrorLog;
+    }
+
+    public void setShowErrorLog(boolean showErrorLog) {
+        this.showErrorLog = showErrorLog;
     }
 
     public void startCompile() {
